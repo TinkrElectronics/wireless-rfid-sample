@@ -9,6 +9,16 @@
 #define ON HIGH
 #define OFF LOW
 
+// Wiring for RFID and ESP32
+// ESP32        RFID-RC522
+// 3.3V         3.3V
+// GND          GND
+// Pin 18       SCK
+// Pin 19       MISO
+// Pin 21       SDA
+// Pin 22       RST
+// Pin 23       MOSI
+
 MFRC522::MIFARE_Key key;
 MFRC522::StatusCode status;
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -18,6 +28,7 @@ WiFiMulti wifiMulti;
 unsigned long cardKey;
 
 char httpLink[100];
+// Change this to your API link
 char httpAPI[] = "http://192.168.254.9/system-rfid/api/record.php";
 
 void setup() {
@@ -28,6 +39,7 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 
+  // Change this, provide your WiFi Name (SSID) and Password
   wifiMulti.addAP("SSID", "PASSWORD");
 
   if((wifiMulti.run() == WL_CONNECTED)) {
